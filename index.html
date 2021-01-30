@@ -46,6 +46,7 @@
             width: 90%;
             max-width: 200px;
             outline: none;
+            border: solid 1px #ddd;
         }
         .chat__button:hover {
             background:linear-gradient(to bottom, #378de5 5%, #79bbff 100%);
@@ -69,12 +70,9 @@
             var chatBtn = document.querySelector('.chat__button');
             var chatWrapper = document.querySelector('.chat__wrapper');
 
-            console.log(chatOpen)
-
             function updateChat() {
                 chatBtn.textContent = chatOpen ?  '✖' : 'CHAT 💬';
                 chatWrapper.classList[chatOpen ? 'add' : 'remove']('chat__wrapper--open');
-                console.log('updated:' + chatOpen)
             }
 
             chatBtn.onclick = function() {
