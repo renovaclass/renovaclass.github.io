@@ -15,13 +15,79 @@
             align-items: center;
         }
         .players,
-        .profiles,
-        .chat {
+        .profiles {
             max-width: 640px;
+            margin-bottom: 10px;
+        }
+        .chat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100vw;
+            max-width: 960px;
+            overflow: hidden;
+        }
+        .chat__button {
+            box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+            background:linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
+            background-color:#79bbff;
+            border-radius:6px;
+            border:1px solid #84bbf3;
+            display:inline-block;
+            cursor:pointer;
+            color:#ffffff;
+            font-family:Arial;
+            font-size:15px;
+            font-weight:bold;
+            padding:6px 24px;
+            text-decoration:none;
+            text-shadow:0px 1px 0px #528ecc;
+            margin-bottom: 10px;
+            width: 90%;
+            max-width: 200px;
+            outline: none;
+        }
+        .chat__button:hover {
+            background:linear-gradient(to bottom, #378de5 5%, #79bbff 100%);
+            background-color:#378de5;
+        }
+        .chat__button:active {
+            position:relative;
+            top:1px;
+        }
+        .chat__wrapper {
+            width: 100%;
+            height: 0;
+        }
+        .chat__wrapper--open {
+            height: 640px;
         }
     </style>
+    <script>
+        function load() {
+            var chatOpen = JSON.parse(localStorage.getItem('chatOpen')) || false;
+            var chatBtn = document.querySelector('.chat__button');
+            var chatWrapper = document.querySelector('.chat__wrapper');
+
+            console.log(chatOpen)
+
+            function updateChat() {
+                chatBtn.textContent = chatOpen ?  '✖' : 'CHAT 💬';
+                chatWrapper.classList[chatOpen ? 'add' : 'remove']('chat__wrapper--open');
+                console.log('updated:' + chatOpen)
+            }
+
+            chatBtn.onclick = function() {
+                chatOpen = !chatOpen;
+                localStorage.setItem('chatOpen', chatOpen);
+                updateChat();
+            }
+
+            updateChat();
+        }
+    </script>
 </head>
-<body>
+<body onload="load()">
     <h1 class="title">Renova Sessions</h1>
     <div class="players">
         <iframe src="https://mixlr.com/users/7716837/embed?artwork=false" width="100%" height="180px" scrolling="no" frameborder="no" marginheight="0" marginwidth="0"></iframe>
@@ -31,10 +97,14 @@
         <iframe width="200" height="250" src="https://www.mixcloud.com/widget/follow/?u=%2Frenovaclass%2F&hide_followers=1" frameborder="0" ></iframe>
     </div>
     <div class="chat">
-        <iframe src="https://www.twitch.tv/embed/renovaclass/chat?parent=renovaclass.github.io"
-                height="640px"
+        <button class="chat__button">&nbsp;</button>
+        <div class="chat__wrapper">
+            <iframe src="https://www.twitch.tv/embed/renovaclass/chat?parent=renovaclass.github.io"
+                scrolling="no" frameborder="no" marginheight="0" marginwidth="0"
+                height="100%"
                 width="100%">
-        </iframe>
+            </iframe>
+        </div>
     </div>
 </body>
 </html>
